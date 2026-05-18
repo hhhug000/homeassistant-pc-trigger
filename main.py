@@ -10,12 +10,13 @@ MQTT_TOPIC = "homeassistant-pc-trigger/" + PC_NAME
 def parse_args():
     parser = argparse.ArgumentParser(description="MQTT listener for Home Assistant PC triggers")
     parser.add_argument("broker", help="MQTT broker IP address")
-    parser.add_argument("--username", default=None, help="MQTT broker username")
-    parser.add_argument("--password", default=None, help="MQTT broker password")
     return parser.parse_args()
 
 args = parse_args()
 MQTT_BROKER = args.broker
+
+username = os.getenv("HA_INTEGRATION_USER")
+password = os.getenv("HA_INTEGRATION_PASS")
 
 def on_message(client, userdata, msg):
     payload = msg.payload.decode()
@@ -63,8 +64,8 @@ client.on_connect = on_connect
 client.on_disconnect = on_disconnect
 client.on_subscribe = on_subscribe
 
-if args.username and args.password:
-    client.username_pw_set(args.username, args.password)
+if username and password:
+    client.username_pw_set(username, password)
 
 client.connect(MQTT_BROKER, 1883, 60)
 
