@@ -2,10 +2,17 @@ import paho.mqtt.client as mqtt
 import socket
 import importlib.util
 import os
+import argparse
 
 PC_NAME = socket.gethostname()
-MQTT_BROKER = "" 
 MQTT_TOPIC = "homeassistant-pc-trigger/" + PC_NAME
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="MQTT listener for Home Assistant PC triggers")
+    parser.add_argument("broker", help="MQTT broker IP address")
+    return parser.parse_args()
+
+MQTT_BROKER = parse_args().broker
 
 def on_message(client, userdata, msg):
     payload = msg.payload.decode()
