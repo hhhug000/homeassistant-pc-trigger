@@ -19,22 +19,26 @@ MQTT_BROKER = args.broker
 
 def on_message(client, userdata, msg):
     payload = msg.payload.decode()
+    parts = payload.split()
     
-    module_path = os.path.join(os.path.dirname(__file__), f"{payload}.py")
+    script_name = parts[0]
+    script_args = parts[1:] if len(parts) > 1 else []
+    
+    module_path = os.path.join(os.path.dirname(__file__), f"{script_name}.py")
     
     try:
-        spec = importlib.util.spec_from_file_location(payload, module_path)
+        spec = importlib.util.spec_from_file_location(script_name, module_path)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         
         if hasattr(module, 'main'):
-            module.main()
+            module.main(*script_args)
         else:
-            print(f"Error: {payload}.py does not have a main() function")
+            print(f"Error: {script_name}.py does not have a main() function")
     except FileNotFoundError:
-        print(f"Error: {payload}.py not found in {os.path.dirname(__file__)}")
+        print(f"Error: {script_name}.py not found in {os.path.dirname(__file__)}")
     except Exception as e:
-        print(f"Error executing {payload}.py: {e}")
+        print(f"Error executing {script_name}.py: {e}")
 
 
 def on_connect(client, userdata, connect_flags, reason_code, properties):
