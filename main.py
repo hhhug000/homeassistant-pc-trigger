@@ -109,7 +109,7 @@ client.on_subscribe = on_subscribe
 
 
 if __name__ == "__main__":
-    args = args  # already parsed above
+    args = args
     logger = setup_logging(getattr(args, "logfile", None))
 
     if username and password:
