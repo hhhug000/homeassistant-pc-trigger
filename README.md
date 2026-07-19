@@ -57,7 +57,6 @@ Optional logfile:
 ```bash
 python main.py 192.168.1.111 --logfile ./ha-trigger.log
 ```
-
 ## Adding scripts
 
 Place a Python file next to `main.py` and make sure it exposes a `main()` function.
