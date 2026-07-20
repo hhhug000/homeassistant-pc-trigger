@@ -2,6 +2,8 @@
 
 Small MQTT listener that runs local Python scripts on demand from Home Assistant or any MQTT publisher.
 
+Designed to be run with automations
+
 ## How it works
 
 The app listens on the topic:
