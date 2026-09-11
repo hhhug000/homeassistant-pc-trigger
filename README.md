@@ -99,3 +99,9 @@ hyprland-switch-workspace gaming
 - The script name must match the `.py` filename.
 - Additional payload words are forwarded as positional arguments.
 - Errors from the script are printed to the console and, if configured, appended to the logfile.
+
+## Licensing
+
+This project is licensed under the Apachw 2.0 license.
+
+For more details see the license file
